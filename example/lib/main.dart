@@ -1,5 +1,4 @@
 import 'package:custom_state/custom_state.dart';
-import 'package:custom_state/state_button/state_outlined_button.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -54,7 +53,7 @@ class _MyHomePageState extends State<MyHomePage> {
   final GlobalKey<CustomState<bool>> stateKey = GlobalKey();
   final GlobalKey<CustomStateMixin<StateButton, ButtonState>> stateButtonKey =
       GlobalKey();
-   Set<ButtonState> buttonState = {ButtonState.fail};
+  Set<ButtonState> buttonState = {ButtonState.fail};
 
   void _incrementCounter([int? reset]) {
     setState(() {

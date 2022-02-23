@@ -270,25 +270,25 @@ class _StateTextButton extends State<StateTextButton>
   }
 
   Widget _buildWidget(Color? fg) {
-    if (customState.contains(ButtonState.progressing) ) {
+    if (customState.contains(ButtonState.progressing)) {
       return widget.loader ??
           Transform.scale(
               scale: 0.6,
               child: CircularProgressIndicator(
                 valueColor: AlwaysStoppedAnimation<Color?>(fg),
               ));
-    } else if (customState.contains(ButtonState.success) ) {
+    } else if (customState.contains(ButtonState.success)) {
       return widget.success ?? widget.initial;
-    } else if (customState.contains(ButtonState.fail) ) {
+    } else if (customState.contains(ButtonState.fail)) {
       return widget.fail ?? widget.initial;
     }
     return widget.initial;
   }
 
   Widget? _buildIcon() {
-    if (customState.contains(ButtonState.progressing) ) {
+    if (customState.contains(ButtonState.progressing)) {
       return widget.loaderIcon ?? widget.icon;
-    } else if (customState.contains(ButtonState.success) ) {
+    } else if (customState.contains(ButtonState.success)) {
       return widget.successIcon ?? widget.icon;
     } else if (customState.contains(ButtonState.fail)) {
       return widget.failIcon ?? widget.icon;
