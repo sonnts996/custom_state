@@ -38,7 +38,7 @@ class _CustomState<S> extends State<CustomStateView<S>>
   void initState() {
     // TODO: implement initState
     super.initState();
-    customState = widget.states ?? widget.initialStates;
+    customState = widget.states ?? Set.of(widget.initialStates);
   }
 
   @override

@@ -20,7 +20,7 @@ import 'button.dart';
 /// - [icon] is default if use ElevatedButton.icon
 /// - [failIcon], [successIcon], [loaderIcon] will be replace the icon field in
 /// the corresponding state [ButtonState.fail], [ButtonState.success] and [ButtonState.progressing]
-/// - [buttonState] != null with be apply this state, else with be apply with setCustomState function in key
+/// - [states] != null with be apply this state, else with be apply with setCustomState function in key
 /// - for define key:
 ///       final GlobalKey<CustomStateMixin<StateButton, ButtonState>> stateButtonKey = GlobalKey();
 class StateTextButton extends StatefulWidget {
@@ -36,10 +36,10 @@ class StateTextButton extends StatefulWidget {
     this.loaderIcon,
     this.failIcon,
     this.successIcon,
-    this.buttonState,
+    this.states,
   }) : super(key: key);
 
-  /// StateTextButton with [buttonState] = null
+  /// StateTextButton with [states] = null
   /// and without use global key.
   /// The state will be [ButtonState.progressing] when [futureOnTab] start
   /// and end with ButtonState return in [futureOnTab]
@@ -110,8 +110,8 @@ class StateTextButton extends StatefulWidget {
   /// custom style child widget
   final ButtonStyle? style;
 
-  /// [buttonState] != null with be apply this state, else with be apply with setCustomState function in key
-  final Set<ButtonState>? buttonState;
+  /// [states] != null with be apply this state, else with be apply with setCustomState function in key
+  final Set<ButtonState>? states;
 
   /// like ElevatedButton.styleFrom with state color for background [success], [fail]
   static ButtonStyle styleFrom({
@@ -225,13 +225,13 @@ class _StateTextButton extends State<StateTextButton>
   @override
   void initState() {
     super.initState();
-    customState = widget.buttonState ?? {ButtonState.initial};
+    customState = widget.states ?? {ButtonState.initial};
   }
 
   @override
   Widget build(BuildContext context) {
-    if (widget.buttonState != null) {
-      customState = widget.buttonState!;
+    if (widget.states != null) {
+      customState = widget.states!;
     }
 
     final widgetStyle = widget.style;

@@ -54,10 +54,14 @@ class _MyHomePageState extends State<MyHomePage> {
   final GlobalKey<CustomState<StateButton, ButtonState>> stateButtonKey =
       GlobalKey();
   Set<ButtonState> buttonState = {ButtonState.fail};
+  Set<bool> customState = {false};
 
   void _incrementCounter([int? reset]) {
+
     setState(() {
       _counter = reset ?? _counter + 1;
+      final bool even = _counter % 2 == 0;
+      customState = {even};
     });
     final bool even = _counter % 2 == 0;
     stateKey.currentState?.replaceCustomState({even});
@@ -106,6 +110,26 @@ class _MyHomePageState extends State<MyHomePage> {
                 )),
             CustomStateView<bool>(
               key: stateKey,
+              stateBuilder: (context, states, customState) {
+                if (states.contains(true)) {
+                  return Text(
+                    '$_counter',
+                    style: Theme.of(context).textTheme.headline4,
+                  );
+                } else {
+                  return Text(
+                    '$_counter',
+                    style: Theme.of(context)
+                        .textTheme
+                        .headline4
+                        ?.apply(color: Colors.redAccent),
+                  );
+                }
+              },
+            ),
+            CustomStateView<bool>(
+              initialStates: const {false},
+              states: customState,
               stateBuilder: (context, states, customState) {
                 if (states.contains(true)) {
                   return Text(
