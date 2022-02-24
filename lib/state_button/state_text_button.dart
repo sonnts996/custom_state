@@ -57,7 +57,7 @@ class StateTextButton extends StatefulWidget {
       Widget? loader,
       ButtonStyle? style,
       bool hasState = true}) {
-    Future _future(CustomStateMixin<dynamic, ButtonState> customState) async {
+    Future _future(CustomState<dynamic, ButtonState> customState) async {
       customState.updateCustomState(ButtonState.progressing).call(true);
       final states = await futureOnTab(currentState: customState.customState);
       customState.replaceCustomState(states);
@@ -65,7 +65,7 @@ class StateTextButton extends StatefulWidget {
 
     return StateTextButton(
       key: key,
-      onTap: (CustomStateMixin<StateTextButton, ButtonState> customState) {
+      onTap: (CustomState<StateTextButton, ButtonState> customState) {
         _future(customState);
       },
       initial: initial,
@@ -219,7 +219,7 @@ class StateTextButton extends StatefulWidget {
 }
 
 class _StateTextButton extends State<StateTextButton>
-    with CustomStateMixin<StateTextButton, ButtonState> {
+    with CustomState<StateTextButton, ButtonState> {
   bool get _disable => customState.contains(ButtonState.disable);
 
   @override

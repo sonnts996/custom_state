@@ -6,7 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 
 /// Base custom state with S state for the T StatefulWidget
-mixin CustomStateMixin<T extends StatefulWidget, S> on State<T> {
+mixin CustomState<T extends StatefulWidget, S> on State<T> {
   /// customState field of CustomStateMixin widget
   Set<S> customState = {};
 

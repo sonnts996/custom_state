@@ -17,23 +17,26 @@ import 'package:custom_state/custom_state.dart';
 ### CustomView:
 
 ```dart
-CustomStateView<bool>(
+enum YourState{ initial, loading, done }
+````
+
+```dart
+CustomStateView<YourState>(
     key: stateKey,
     stateBuilder: (context, states, customState) {
-        if (states.contains(true)) {
+        if (states.contains(YourState.initial)) {
             return Text(
-                '$_counter',
-                style: Theme.of(context).textTheme.headline4,
+                'initial'
+                );
+        } else if (states.contains(YourState.loading)){
+            return Text(
+                'Loading'
                 );
         } else {
             return Text(
-                '$_counter',
-                style: Theme.of(context)
-                    .textTheme
-                    .headline4
-                    ?.apply(color: Colors.redAccent),
-                );
-        }
+            'Done'
+            );
+        } 
     },
 ),
 ```
@@ -41,9 +44,9 @@ CustomStateView<bool>(
 * Change state
 
 ```dart
-final GlobalKey<CustomState<bool>> stateKey = GlobalKey();
+final GlobalKey<CustomState<YourState>> stateKey = GlobalKey();
 ...
-stateKey.currentState?.replaceCustomState({even});
+stateKey.currentState?.replaceCustomState({YourState.loading});
 ```
 
 

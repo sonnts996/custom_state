@@ -50,8 +50,8 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
-  final GlobalKey<CustomState<bool>> stateKey = GlobalKey();
-  final GlobalKey<CustomStateMixin<StateButton, ButtonState>> stateButtonKey =
+  final GlobalKey<CustomState<CustomStateView, bool>> stateKey = GlobalKey();
+  final GlobalKey<CustomState<StateButton, ButtonState>> stateButtonKey =
       GlobalKey();
   Set<ButtonState> buttonState = {ButtonState.fail};
 
@@ -143,7 +143,7 @@ class _MyHomePageState extends State<MyHomePage> {
               loader: const Text('Loading..'),
             ),
             StateButton(
-              buttonState: buttonState,
+              states: buttonState,
               successIcon: const Icon(Icons.check),
               failIcon: const Icon(Icons.close),
               loaderIcon: Transform.scale(

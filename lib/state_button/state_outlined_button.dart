@@ -57,7 +57,7 @@ class StateOutlinedButton extends StatefulWidget {
       Widget? loader,
       ButtonStyle? style,
       bool hasState = true}) {
-    Future _future(CustomStateMixin<dynamic, ButtonState> customState) async {
+    Future _future(CustomState<dynamic, ButtonState> customState) async {
       customState.updateCustomState(ButtonState.progressing).call(true);
       final states = await futureOnTab(currentState: customState.customState);
       customState.replaceCustomState(states);
@@ -65,7 +65,7 @@ class StateOutlinedButton extends StatefulWidget {
 
     return StateOutlinedButton(
       key: key,
-      onTap: (CustomStateMixin<StateOutlinedButton, ButtonState> customState) {
+      onTap: (CustomState<StateOutlinedButton, ButtonState> customState) {
         _future(customState);
       },
       initial: initial,
@@ -245,7 +245,7 @@ class StateOutlinedButton extends StatefulWidget {
 }
 
 class _StateOutlinedButton extends State<StateOutlinedButton>
-    with CustomStateMixin<StateOutlinedButton, ButtonState> {
+    with CustomState<StateOutlinedButton, ButtonState> {
   bool get _disable => customState.contains(ButtonState.disable);
 
   @override

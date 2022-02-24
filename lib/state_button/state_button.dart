@@ -2,7 +2,6 @@
  Created by Thanh Son on 2/8/2022.
  Copyright (c) 2022 . All rights reserved.
 */
-import 'package:custom_state/custom_state.dart';
 import 'package:custom_state/custom_state/custom_state_mixin.dart';
 import 'package:custom_state/functions/functions.dart';
 import 'package:flutter/foundation.dart';
@@ -20,7 +19,7 @@ import 'button.dart';
 /// - [icon] is default if use ElevatedButton.icon
 /// - [failIcon], [successIcon], [loaderIcon] will be replace the icon field in
 /// the corresponding state [ButtonState.fail], [ButtonState.success] and [ButtonState.progressing]
-/// - [buttonState] != null with be apply this state, else with be apply with setCustomState function in key
+/// - [states] != null with be apply this state, else with be apply with setCustomState function in key
 /// - for define key:
 ///       final GlobalKey<CustomStateMixin<StateButton, ButtonState>> stateButtonKey = GlobalKey();
 class StateButton extends StatefulWidget {
@@ -36,10 +35,10 @@ class StateButton extends StatefulWidget {
       this.loaderIcon,
       this.failIcon,
       this.successIcon,
-      this.buttonState})
+      this.states})
       : super(key: key);
 
-  /// StateButton with [buttonState] = null
+  /// StateButton with [states] = null
   /// and without use global key.
   /// The state will be [ButtonState.progressing] when [futureOnTab] start
   /// and end with ButtonState return in [futureOnTab]
@@ -57,7 +56,7 @@ class StateButton extends StatefulWidget {
       Widget? loader,
       ButtonStyle? style,
       bool hasState = true}) {
-    Future _future(CustomStateMixin<dynamic, ButtonState> customState) async {
+    Future _future(CustomState<dynamic, ButtonState> customState) async {
       customState.updateCustomState(ButtonState.progressing).call(true);
       final states = await futureOnTab(currentState: customState.customState);
       customState.replaceCustomState(states);
@@ -65,7 +64,7 @@ class StateButton extends StatefulWidget {
 
     return StateButton(
       key: key,
-      onTap: (CustomStateMixin<StateButton, ButtonState> customState) {
+      onTap: (CustomState<StateButton, ButtonState> customState) {
         _future(customState);
       },
       initial: initial,
@@ -110,8 +109,8 @@ class StateButton extends StatefulWidget {
   /// custom style child widget
   final ButtonStyle? style;
 
-  /// [buttonState] != null with be apply this state, else with be apply with setCustomState function in key
-  final Set<ButtonState>? buttonState;
+  /// [states] != null with be apply this state, else with be apply with setCustomState function in key
+  final Set<ButtonState>? states;
 
   /// like ElevatedButton.styleFrom with state color for background [success], [fail]
   /// and state color for foreground [onSuccess], [onFail]
@@ -239,19 +238,19 @@ class StateButton extends StatefulWidget {
 }
 
 class _StateButton extends State<StateButton>
-    with CustomStateMixin<StateButton, ButtonState> {
+    with CustomState<StateButton, ButtonState> {
   bool get _disable => customState.contains(ButtonState.disable);
 
   @override
   void initState() {
     super.initState();
-    customState = widget.buttonState ?? {ButtonState.initial};
+    customState = widget.states ?? {ButtonState.initial};
   }
 
   @override
   Widget build(BuildContext context) {
-    if (widget.buttonState != null) {
-      customState = widget.buttonState!;
+    if (widget.states != null) {
+      customState = widget.states!;
     }
 
     final widgetStyle = widget.style;
