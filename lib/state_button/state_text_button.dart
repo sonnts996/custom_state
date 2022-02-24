@@ -2,7 +2,6 @@
  Created by Thanh Son on 2/8/2022.
  Copyright (c) 2022 . All rights reserved.
 */
-import 'package:custom_state/custom_state.dart';
 import 'package:custom_state/custom_state/custom_state_mixin.dart';
 import 'package:custom_state/functions/functions.dart';
 import 'package:flutter/foundation.dart';
