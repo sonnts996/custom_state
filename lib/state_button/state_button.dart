@@ -32,9 +32,11 @@ class StateButton extends StatefulWidget {
       this.loader,
       this.style,
       this.icon,
+      this.disable,
       this.loaderIcon,
       this.failIcon,
       this.successIcon,
+      this.disableIcon,
       this.states})
       : super(key: key);
 
@@ -51,9 +53,11 @@ class StateButton extends StatefulWidget {
       Widget? loaderIcon,
       Widget? successIcon,
       Widget? failIcon,
+      Widget? disableIcon,
       Widget? fail,
       Widget? success,
       Widget? loader,
+      Widget? disable,
       ButtonStyle? style,
       bool hasState = true}) {
     Future _future(CustomState<dynamic, ButtonState> customState) async {
@@ -76,6 +80,8 @@ class StateButton extends StatefulWidget {
       fail: fail,
       success: success,
       loader: loader,
+      disable: disable,
+      disableIcon: disableIcon,
     );
   }
 
@@ -94,6 +100,9 @@ class StateButton extends StatefulWidget {
   /// [ButtonState.fail] if use ElevatedButton.icon
   final Widget? failIcon;
 
+  /// [ButtonState.forceDisabled] if use ElevatedButton.icon
+  final Widget? disableIcon;
+
   ///  default child widget, in undefine state
   final Widget initial;
 
@@ -105,6 +114,9 @@ class StateButton extends StatefulWidget {
 
   /// [ButtonState.loader] child widget
   final Widget? loader;
+
+  /// [ButtonState.forceDisabled] child widget
+  final Widget? disable;
 
   /// custom style child widget
   final ButtonStyle? style;
@@ -140,6 +152,8 @@ class StateButton extends StatefulWidget {
     Color? onSuccess,
     Color? fail,
     Color? onFail,
+    Color? disable,
+    Color? onDisable,
   }) {
     final style = ElevatedButton.styleFrom(
       primary: primary,
@@ -174,6 +188,7 @@ class StateButton extends StatefulWidget {
             onSurface: onSurface,
             fail: fail,
             success: success,
+            disable: disable,
           );
     final _StateForeground? foregroundColor = (onSurface == null &&
             onPrimary == null &&
@@ -185,6 +200,7 @@ class StateButton extends StatefulWidget {
             onSurface: onSurface,
             onFail: onFail,
             onSuccess: onSuccess,
+            onDisable: onDisable,
           );
 
     return style.copyWith(
@@ -239,7 +255,7 @@ class StateButton extends StatefulWidget {
 
 class _StateButton extends State<StateButton>
     with CustomState<StateButton, ButtonState> {
-  bool get _disable => customState.contains(ButtonState.disable);
+  bool get _disable => disable(customState);
 
   @override
   void initState() {
@@ -298,6 +314,8 @@ class _StateButton extends State<StateButton>
               child: CircularProgressIndicator(
                 valueColor: AlwaysStoppedAnimation<Color?>(fg),
               ));
+    } else if (customState.contains(ButtonState.forceDisabled)) {
+      return widget.disable ?? widget.initial;
     } else if (customState.contains(ButtonState.success)) {
       return widget.success ?? widget.initial;
     } else if (customState.contains(ButtonState.fail)) {
@@ -309,6 +327,8 @@ class _StateButton extends State<StateButton>
   Widget? _buildIcon() {
     if (customState.contains(ButtonState.progressing)) {
       return widget.loaderIcon ?? widget.icon;
+    } else if (customState.contains(ButtonState.forceDisabled)) {
+      return widget.disableIcon ?? widget.icon;
     } else if (customState.contains(ButtonState.success)) {
       return widget.successIcon ?? widget.icon;
     } else if (customState.contains(ButtonState.fail)) {
@@ -326,6 +346,7 @@ class _StateBackground extends MaterialStateProperty<Color?>
     this.onSurface,
     this.fail,
     this.success,
+    this.disable,
     this.buttonState = const {},
   });
 
@@ -333,13 +354,14 @@ class _StateBackground extends MaterialStateProperty<Color?>
   final Color? onSurface;
   final Color? success;
   final Color? fail;
+  final Color? disable;
   final Set<ButtonState> buttonState;
 
   @override
   Color? resolve(Set<dynamic> states) {
     var color = resolveProp(buttonState);
-    if (buttonState.contains(ButtonState.disable) ||
-        states.contains(MaterialState.disabled)) {
+    if (states.contains(MaterialState.disabled) ||
+        buttonState.contains(ButtonState.disabled)) {
       return (color ?? onSurface)?.withOpacity(0.08);
     }
     return color ?? primary;
@@ -351,12 +373,15 @@ class _StateBackground extends MaterialStateProperty<Color?>
       onSurface: onSurface,
       success: success,
       fail: fail,
+      disable: disable,
       buttonState: states);
 
   @override
   Color? resolveProp(Set<ButtonState> states) {
     Color? color;
-    if (buttonState.contains(ButtonState.fail)) {
+    if (buttonState.contains(ButtonState.forceDisabled)) {
+      color = disable;
+    } else if (buttonState.contains(ButtonState.fail)) {
       color = fail;
     } else if (buttonState.contains(ButtonState.success)) {
       color = success;
@@ -373,19 +398,21 @@ class _StateForeground extends MaterialStateProperty<Color?>
       this.onSurface,
       this.onFail,
       this.onSuccess,
+      this.onDisable,
       this.buttonState = const {}});
 
   final Color? onPrimary;
   final Color? onSurface;
   final Color? onSuccess;
   final Color? onFail;
+  final Color? onDisable;
   final Set<ButtonState> buttonState;
 
   @override
-  Color? resolve(Set<dynamic> states) {
+  Color? resolve(Set<MaterialState> states) {
     var color = resolveProp(buttonState);
 
-    if (states.contains(MaterialState.disabled)) {
+    if (disableAlpha(states, buttonState)) {
       return (color ?? onSurface)?.withOpacity(0.38);
     }
     return color ?? onPrimary;
@@ -396,20 +423,20 @@ class _StateForeground extends MaterialStateProperty<Color?>
       onSuccess: onSurface,
       onSurface: onSurface,
       onPrimary: onPrimary,
+      onDisable: onDisable,
       onFail: onFail,
       buttonState: states);
 
   @override
   Color? resolveProp(Set<ButtonState> states) {
     Color? color;
-    if (states.contains(ButtonState.fail)) {
+    if (states.contains(ButtonState.forceDisabled)) {
+      color = onDisable;
+    } else if (states.contains(ButtonState.fail)) {
       color = onFail;
     } else if (states.contains(ButtonState.success)) {
       color = onSuccess;
     }
-    // if (states.contains(ButtonState.disable)) {
-    //   return color?.withOpacity(0.08);
-    // }
     return color;
   }
 }

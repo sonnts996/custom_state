@@ -1,6 +1,6 @@
 name: custom_state
 description: Custom state is a flutter widget can access ui with custom state
-version: 0.0.1+2
+version: 0.0.2
 repository: https://github.com/sonnts996/custom_state
 
 environment:

@@ -57,7 +57,6 @@ class _MyHomePageState extends State<MyHomePage> {
   Set<bool> customState = {false};
 
   void _incrementCounter([int? reset]) {
-
     setState(() {
       _counter = reset ?? _counter + 1;
       final bool even = _counter % 2 == 0;
@@ -160,6 +159,7 @@ class _MyHomePageState extends State<MyHomePage> {
               style: StateButton.styleFrom(
                   minimumSize: const Size(100, 40),
                   success: Colors.greenAccent,
+                  disable: Colors.grey,
                   fail: Colors.redAccent),
               initial: const Text('CHECK (2s)'),
               success: const Text('EVEN'),
@@ -181,6 +181,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 });
               },
               style: StateButton.styleFrom(
+                  disable: Colors.grey,
                   minimumSize: const Size(100, 40),
                   success: Colors.greenAccent,
                   fail: Colors.redAccent),
@@ -202,19 +203,19 @@ class _MyHomePageState extends State<MyHomePage> {
             StateTextButton.future(
                 futureOnTab: _updateState,
                 style: StateTextButton.styleFrom(
-                  minimumSize: const Size(100, 40),
-                  success: Colors.green,
-                  fail: Colors.red,
-                ),
+                    minimumSize: const Size(100, 40),
+                    success: Colors.green,
+                    fail: Colors.red,
+                    disable: Colors.grey),
                 initial: const Text('RESET (2s)')),
             StateOutlinedButton.future(
                 futureOnTab: _updateState,
                 style: StateOutlinedButton.styleFrom(
-                  minimumSize: const Size(100, 40),
-                  success: Colors.green,
-                  fail: Colors.red,
-                  successSide: BorderSide(color: Colors.green),
-                ),
+                    minimumSize: const Size(100, 40),
+                    success: Colors.green,
+                    fail: Colors.red,
+                    successSide: const BorderSide(color: Colors.green),
+                    disable: Colors.grey),
                 initial: const Text('RESET (2s)')),
           ],
         ),
@@ -231,9 +232,9 @@ class _MyHomePageState extends State<MyHomePage> {
       {Set<ButtonState>? currentState}) async {
     await Future.delayed(const Duration(seconds: 2));
     if (_counter % 2 == 0) {
-      return {ButtonState.success};
+      return {ButtonState.success, ButtonState.forceDisabled};
     } else {
-      return {ButtonState.fail};
+      return {ButtonState.fail, ButtonState.forceDisabled};
     }
   }
 }
