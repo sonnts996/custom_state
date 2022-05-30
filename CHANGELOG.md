@@ -7,3 +7,7 @@
 ## 0.0.2
 
 add ButtonState.forceDisabled
+
+## 0.0.3
+
+fix bug: disable color

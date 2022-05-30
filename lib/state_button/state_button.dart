@@ -362,7 +362,7 @@ class _StateBackground extends MaterialStateProperty<Color?>
     var color = resolveProp(buttonState);
     if (states.contains(MaterialState.disabled) ||
         buttonState.contains(ButtonState.disabled)) {
-      return (color ?? onSurface)?.withOpacity(0.08);
+      return (color ?? onSurface)?.withOpacity(0.8);
     }
     return color ?? primary;
   }
@@ -420,7 +420,7 @@ class _StateForeground extends MaterialStateProperty<Color?>
 
   @override
   _StateForeground withState(Set<ButtonState> states) => _StateForeground(
-      onSuccess: onSurface,
+      onSuccess: onSuccess,
       onSurface: onSurface,
       onPrimary: onPrimary,
       onDisable: onDisable,
