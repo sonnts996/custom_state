@@ -11,3 +11,7 @@ add ButtonState.forceDisabled
 ## 0.0.3
 
 fix bug: disable color
+
+## 1.0.0
+
+upgrade to dart3

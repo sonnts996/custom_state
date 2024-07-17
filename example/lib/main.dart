@@ -113,14 +113,14 @@ class _MyHomePageState extends State<MyHomePage> {
                 if (states.contains(true)) {
                   return Text(
                     '$_counter',
-                    style: Theme.of(context).textTheme.headline4,
+                    style: Theme.of(context).textTheme.headlineMedium,
                   );
                 } else {
                   return Text(
                     '$_counter',
                     style: Theme.of(context)
                         .textTheme
-                        .headline4
+                        .headlineMedium
                         ?.apply(color: Colors.redAccent),
                   );
                 }
@@ -133,14 +133,14 @@ class _MyHomePageState extends State<MyHomePage> {
                 if (states.contains(true)) {
                   return Text(
                     '$_counter',
-                    style: Theme.of(context).textTheme.headline4,
+                    style: Theme.of(context).textTheme.headlineMedium,
                   );
                 } else {
                   return Text(
                     '$_counter',
                     style: Theme.of(context)
                         .textTheme
-                        .headline4
+                        .headlineMedium
                         ?.apply(color: Colors.redAccent),
                   );
                 }

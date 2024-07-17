@@ -156,9 +156,9 @@ class StateButton extends StatefulWidget {
     Color? onDisable,
   }) {
     final style = ElevatedButton.styleFrom(
-      primary: primary,
-      onPrimary: onPrimary,
-      onSurface: onSurface,
+      backgroundColor: primary,
+      foregroundColor: onPrimary,
+      disabledForegroundColor: onSurface,
       shadowColor: shadowColor,
       elevation: elevation,
       textStyle: textStyle,
@@ -231,7 +231,7 @@ class StateButton extends StatefulWidget {
       onSuccess: colorScheme.onPrimary,
       shadowColor: theme.shadowColor,
       elevation: 2,
-      textStyle: theme.textTheme.button,
+      textStyle: theme.textTheme.labelLarge,
       padding: scaledPadding,
       minimumSize: const Size(64, 36),
       maximumSize: Size.infinite,

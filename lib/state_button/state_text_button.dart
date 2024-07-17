@@ -152,8 +152,8 @@ class StateTextButton extends StatefulWidget {
     Color? disable,
   }) {
     final style = TextButton.styleFrom(
-      primary: primary,
-      onSurface: onSurface,
+      foregroundColor: primary,
+      disabledForegroundColor: onSurface,
       shadowColor: shadowColor,
       backgroundColor: backgroundColor,
       elevation: elevation,
@@ -209,7 +209,7 @@ class StateTextButton extends StatefulWidget {
       success: colorScheme.primary,
       shadowColor: theme.shadowColor,
       elevation: 2,
-      textStyle: theme.textTheme.button,
+      textStyle: theme.textTheme.labelLarge,
       padding: scaledPadding,
       minimumSize: const Size(64, 36),
       maximumSize: Size.infinite,
