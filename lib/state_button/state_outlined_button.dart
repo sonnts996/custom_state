@@ -156,9 +156,9 @@ class StateOutlinedButton extends StatefulWidget {
     BorderSide? disableSide,
   }) {
     final style = OutlinedButton.styleFrom(
-      primary: primary,
+      foregroundColor: primary,
       backgroundColor: backgroundColor,
-      onSurface: onSurface,
+      disabledForegroundColor: onSurface,
       shadowColor: shadowColor,
       elevation: elevation,
       textStyle: textStyle,
@@ -233,7 +233,7 @@ class StateOutlinedButton extends StatefulWidget {
       success: colorScheme.onPrimary,
       shadowColor: theme.shadowColor,
       elevation: 2,
-      textStyle: theme.textTheme.button,
+      textStyle: theme.textTheme.labelLarge,
       padding: scaledPadding,
       minimumSize: const Size(64, 36),
       maximumSize: Size.infinite,
